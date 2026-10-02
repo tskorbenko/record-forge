@@ -1,0 +1,10 @@
+services:
+  record-forge:
+    build: .
+    ports:
+      - "8000:8000"
+    volumes:
+      - record-forge-temp:/app/temp
+volumes:
+  record-forge-temp:
+

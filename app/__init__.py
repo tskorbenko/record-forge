@@ -1,0 +1,2 @@
+"""Record Forge application package."""
+

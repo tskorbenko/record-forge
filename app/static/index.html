@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Turn a short MP3 or WAV clip into a 3D-printable 7-inch record.">
+  <title>Record Forge</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23101218'/%3E%3Ccircle cx='16' cy='16' r='10' fill='none' stroke='%23d8ff56' stroke-width='3'/%3E%3Ccircle cx='16' cy='16' r='2' fill='%23d8ff56'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="/" aria-label="Record Forge home">
+      <span class="brand-mark" aria-hidden="true"><span></span></span>
+      <span>RECORD FORGE</span>
+    </a>
+    <div class="spec-strip" aria-label="Record specification">
+      <span>7 INCH</span><span>45 RPM</span><span>MONO</span><span>0.2 MM NOZZLE</span>
+    </div>
+  </header>
+
+  <main>
+    <section class="intro" aria-labelledby="page-title">
+      <p class="eyebrow">AUDIO → PHYSICAL GROOVE</p>
+      <h1 id="page-title">Make your record.</h1>
+      <p>Upload a short clip. Record Forge filters the audio, calculates the groove, and builds a watertight model ready for your slicer.</p>
+    </section>
+
+    <section class="workspace" aria-label="Record generator">
+      <div class="mode-panel">
+        <div>
+          <span class="step-index">01</span>
+          <h2>Choose a groove</h2>
+        </div>
+        <fieldset class="segmented" id="mode-selector">
+          <legend class="sr-only">Record type</legend>
+          <label><input type="radio" name="mode" value="normal" checked><span>Normal record<small>One continuous spiral</small></span></label>
+          <label><input type="radio" name="mode" value="loop"><span>Infinite loop <b>EXP</b><small>Closed repeating grooves</small></span></label>
+        </fieldset>
+        <div class="loop-count" id="loop-count-wrap" hidden>
+          <label for="loop-count">Number of independent loops</label>
+          <select id="loop-count">
+            <option value="1">1 groove</option><option value="2">2 grooves</option>
+            <option value="3">3 grooves</option><option value="4">4 grooves</option>
+          </select>
+          <p>Each groove repeats 1.333 seconds endlessly.</p>
+        </div>
+      </div>
+
+      <div class="upload-panel">
+        <div class="section-heading">
+          <div><span class="step-index">02</span><h2>Add audio</h2></div>
+          <span class="limit" id="duration-limit">MAX 30 SECONDS</span>
+        </div>
+        <div id="upload-slots" class="upload-slots"></div>
+        <p class="file-note">MP3 or WAV · files over the limit are trimmed automatically · 50 MB maximum</p>
+      </div>
+
+      <div class="action-panel">
+        <div>
+          <span class="step-index">03</span>
+          <h2>Build the model</h2>
+          <p>Generation runs locally on this server. A full record may take a few minutes.</p>
+        </div>
+        <button class="generate-button" id="generate" type="button" disabled>
+          <span>Generate record</span><span aria-hidden="true">↗</span>
+        </button>
+      </div>
+    </section>
+
+    <section class="status-card" id="status-card" aria-live="polite" hidden>
+      <div class="status-top"><span class="pulse" aria-hidden="true"></span><span id="status-label">Preparing audio</span><span id="stage-count">1 / 7</span></div>
+      <div class="stage-track" aria-hidden="true"><span id="stage-fill"></span></div>
+      <p id="status-detail">Keep this page open while the groove is calculated.</p>
+    </section>
+
+    <section class="result-card" id="result-card" hidden>
+      <div class="result-copy">
+        <p class="eyebrow" id="result-eyebrow">MODEL COMPLETE</p>
+        <h2 id="result-title">Your record is ready.</h2>
+        <dl id="result-stats"></dl>
+        <details>
+          <summary>Generation details</summary>
+          <pre id="debug-output"></pre>
+        </details>
+      </div>
+      <div class="result-actions">
+        <audio id="preview-player" controls preload="metadata"></audio>
+        <a class="download primary" id="download-3mf" href="#" download>Download 3MF <span>PRIMARY</span></a>
+        <a class="download" id="download-stl" href="#" download>Download STL</a>
+        <button class="reset-button" id="reset" type="button">Make another record</button>
+      </div>
+    </section>
+
+    <section class="warning" aria-label="Experimental printing notice">
+      <span>EXPERIMENTAL</span>
+      <p>Designed for fine-layer FDM printing with a 0.2 mm nozzle. Playback quality and turntable compatibility are not guaranteed. Inspect the model in your slicer before printing.</p>
+    </section>
+  </main>
+
+  <footer><span>RECORD FORGE / MVP 0.1</span><span>FILES EXPIRE AFTER 6 HOURS</span></footer>
+  <script src="/static/app.js" defer></script>
+</body>
+</html>
+

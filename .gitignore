@@ -1,0 +1,11 @@
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+temp/*
+!temp/.gitkeep
+*.stl
+*.3mf
+!examples/*.stl
+!examples/*.3mf
+.DS_Store
